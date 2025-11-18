@@ -1,0 +1,17 @@
+/*
+Theme Name: Steinmetz Printing
+Theme URI: https://steinmetzprinting.com
+Author: Steinmetz Printing
+Author URI: https://steinmetzprinting.com
+Description: A modern, responsive block theme for Steinmetz Printing - custom printing solutions for apparel, yard signs, door hangers, business cards, car magnets, and more.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.4
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: steinmetz-printing
+Tags: block-patterns, block-styles, custom-colors, custom-logo, custom-menu, editor-style, featured-images, full-site-editing, one-column, responsive-layout, rtl-language-support, threaded-comments, translation-ready, wide-blocks
+*/
+
+/* Main theme styles are handled through theme.json and block styles */
