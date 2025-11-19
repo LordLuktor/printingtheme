@@ -11,8 +11,15 @@ body {
     overflow-x: hidden;
 }
 
-* {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
+}
+
+/* Prevent layout breaks from dynamically injected content */
+body > * {
+    max-width: 100%;
 }
 
 /* Navigation Enhancements */
@@ -258,4 +265,150 @@ img {
     color: var(--wp--preset--color--white);
     padding: 0.5rem 1rem;
     border-radius: 4px;
+}
+
+/* ==========================================
+   JETPACK ADS & DYNAMIC CONTENT FIX
+   ========================================== */
+
+/* Contain all Jetpack ad-related elements */
+#google_ads_iframe_container,
+.adsbygoogle,
+.jetpack-ad,
+.wpcnt,
+[id*="google_ads"],
+[class*="google-ad"],
+.adpacks-ad,
+.ad-wrapper,
+ins.adsbygoogle {
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    /* Prevent ads from participating in flex layout */
+    flex-shrink: 0 !important;
+}
+
+/* Prevent iframes from breaking layout */
+iframe {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Fix flex containers to handle dynamic content better */
+.wp-block-group,
+.wp-block-columns,
+.wp-block-column {
+    min-width: 0 !important;
+    /* This prevents flex items from overflowing */
+}
+
+/* Ensure main content wrapper doesn't break */
+.wp-site-blocks,
+.wp-block-post-content {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+}
+
+/* Header protection - prevent ads from breaking header layout */
+header,
+header .wp-block-group,
+.wp-block-template-part {
+    position: relative;
+    overflow: visible !important;
+}
+
+/* Force proper alignment in flex containers */
+.wp-block-group[style*="display:flex"],
+.wp-block-group[style*="display: flex"],
+div[class*="wp-block-group"][style*="display:flex"] {
+    align-items: center !important;
+}
+
+/* Isolate ad containers from affecting sibling elements */
+div:has(> .adsbygoogle),
+div:has(> iframe[id*="google_ads"]),
+div:has(> .jetpack-ad) {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+    clear: both !important;
+}
+
+/* Clean up any leftover ad containers */
+.adsbygoogle:empty,
+.jetpack-ad:empty,
+[id*="google_ads"]:empty {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Prevent absolutely positioned ads from breaking layout */
+.adsbygoogle[style*="position: absolute"],
+.jetpack-ad[style*="position: absolute"] {
+    position: relative !important;
+}
+
+/* Additional protection for navigation alignment */
+.wp-block-navigation,
+.wp-block-navigation__container {
+    overflow: visible !important;
+    max-width: none !important;
+}
+
+/* Create safe ad zones that don't break layout */
+.widget-area,
+.sidebar,
+article,
+main {
+    position: relative;
+    overflow: visible !important;
+}
+
+/* Ensure ads inside content don't break text flow */
+article .adsbygoogle,
+main .adsbygoogle,
+.wp-block-post-content .adsbygoogle {
+    display: block !important;
+    margin: 2rem auto !important;
+    text-align: center !important;
+    clear: both !important;
+}
+
+/* Responsive ad handling */
+@media (max-width: 768px) {
+    .adsbygoogle,
+    .jetpack-ad,
+    iframe[id*="google_ads"] {
+        width: 100% !important;
+        min-width: auto !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+}
+
+/* Prevent ads from appearing in header/nav */
+header .adsbygoogle,
+nav .adsbygoogle,
+.wp-block-navigation .adsbygoogle {
+    display: none !important;
+}
+
+/* Grid and flex layout protection */
+.wp-block-columns,
+.wp-block-group {
+    isolation: isolate;
+}
+
+/* Ensure constrained layouts stay constrained */
+.wp-block-group.has-global-padding,
+[class*="wp-container-"] {
+    container-type: inline-size;
+    max-width: 100% !important;
 }
